@@ -66,6 +66,7 @@ export default createStore({
     },
     register({commit}, user) {
       return new Promise((resolve, reject) => {
+        console.log('before sending axios')
         commit('auth_request');
         axios({url: process.env.VUE_APP_REGISTER,
                data: user,

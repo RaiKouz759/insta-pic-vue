@@ -1,5 +1,8 @@
 
 <template>
+    <div v-if="loading" class="loading-div" >
+      <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
     <div class="app-body">
       <div class="app-header">
         <!-- <a @click="testToken">Test Token</a> -->
@@ -69,6 +72,7 @@ export default {
       continueSubscribe: true,
       polling: null,
       current_username: '',
+      loading: false,
       userId: 1, //later change this when implementing login
     }
   },
@@ -144,6 +148,7 @@ export default {
             this.goToHome();
             return;
           }
+          this.loading = true;
           let blob = await fetch(this.image);
           blob = await blob.blob();
           let form = new FormData();
@@ -151,7 +156,7 @@ export default {
           form.append('caption', this.caption);
           form.append('userId', this.currentUser.user_id);
           // console.log(this.caption);
-          let responseJson = await this.$http.post('http://127.0.0.1:5000/api/post/submitPost', 
+          let responseJson = await this.$http.post(process.env.VUE_APP_SUBMIT_POST, 
             form,
           );
           console.log(responseJson.data);
@@ -162,6 +167,7 @@ export default {
       } finally {
           console.log('finally: go back to home');
           this.goToHome();
+          this.loading = false;
       }
     },
     async b64toBlob(base64, type = 'image/jpg') {
@@ -173,7 +179,7 @@ export default {
     ,
     async getLatestPosts(numPosts) {
         // get latest posts from the db and unshift the post array to slot it in
-        await fetch(`http://127.0.0.1:5000/api/post/latest/${numPosts}`).then( response => {
+        await fetch(process.env.VUE_APP_GET_LATEST + `${numPosts}`).then( response => {
             return response.json();
         }).then(async (myJson) => {
             
@@ -329,6 +335,54 @@ label {
 
 .next-cta {
   right: 10px;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.5);
+  display: grid;
+  place-items: center;
 }
 
 </style>

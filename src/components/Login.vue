@@ -49,6 +49,7 @@
                 .catch(err => {
                     console.log(err.statusCode)
                     if (err.statusCode == 401) {
+                        this.errors = [];
                         this.errors.push('Wrong credentials.');
                     }
                 });
