@@ -90,7 +90,7 @@ export default {
     // get latest 10? posts and load them into posts
     console.log('im created');
     (async () =>{
-      await this.getLatestPosts(10); 
+      await this.getLatestPosts(50); 
       this.polling = setInterval(() => {
         this.subscribe();
       }, 2000);
