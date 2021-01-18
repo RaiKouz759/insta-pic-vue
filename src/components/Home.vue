@@ -81,7 +81,7 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
     currentUser() {
-      console.log(this.$store.getters.currentUser);
+      // console.log(this.$store.getters.currentUser);
       return this.$store.getters.currentUser;
     }
   },
@@ -103,7 +103,7 @@ export default {
   beforeUnmount() {
     this.posts.forEach(post => {
       URL.revokeObjectURL(post.imageString);
-      console.log('unmounting')
+      // console.log('unmounting')
     })
     clearInterval(this.polling);
   },
@@ -159,13 +159,13 @@ export default {
           let responseJson = await this.$http.post(process.env.VUE_APP_SUBMIT_POST, 
             form,
           );
-          console.log(responseJson.data);
+          console.log(responseJson.status);
 
       } catch (err) {
           console.log(err.message);
           console.log(err.stack);
       } finally {
-          console.log('finally: go back to home');
+          // console.log('finally: go back to home');
           this.goToHome();
           this.loading = false;
       }
@@ -182,7 +182,6 @@ export default {
         await fetch(process.env.VUE_APP_GET_LATEST + `${numPosts}`).then( response => {
             return response.json();
         }).then(async (myJson) => {
-            
             const allPromises = myJson.map(async (value) =>{
               let blob = await this.b64toBlob(value.imageString);
               value.imageString = URL.createObjectURL(blob);
@@ -240,7 +239,7 @@ export default {
           // throw new Error('start again');
         }
       } catch(error){
-        console.log(error.message);
+        // console.log(error.message);
         // await new Promise(resolve => setTimeout(resolve, 1000));
         // restart for all cases
         // await this.subscribe();

@@ -36,8 +36,8 @@ export default createStore({
                data: user,
                method: 'POST'})
         .then(resp => {
-          console.log(resp)
-          console.log(resp.data)
+          // console.log(resp)
+          // console.log(resp.data)
           const token = resp.data.token;
           const user = resp.data.user;
           localStorage.setItem('token', token);
@@ -50,7 +50,7 @@ export default createStore({
           commit('auth_error', err);
           localStorage.removeItem('token');
           err.statusCode = 401;
-          console.log(err)
+          // console.log(err)
           reject(err);
         })
       })
@@ -66,7 +66,7 @@ export default createStore({
     },
     register({commit}, user) {
       return new Promise((resolve, reject) => {
-        console.log('before sending axios')
+        // console.log('before sending axios')
         commit('auth_request');
         axios({url: process.env.VUE_APP_REGISTER,
                data: user,
