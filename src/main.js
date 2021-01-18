@@ -18,8 +18,8 @@ if (token) {
 app.axios.interceptors.response.use(undefined, (err) => {
     return new Promise((resolve, reject) => {
     //   console.log('error is below')
-      console.log(typeof(err))
-      console.log(err)
+      // console.log(typeof(err))
+      // console.log(err)
       const parseErr = {err};
       if (parseErr.err.response.status === 401) {
         // console.log(err)
