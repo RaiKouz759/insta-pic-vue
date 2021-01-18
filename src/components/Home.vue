@@ -202,11 +202,11 @@ export default {
     async subscribe() {
       try{
         // subscribe to server for updates
-        console.log('start subscribing');
+        // console.log('start subscribing');
         // console.log(!this.continueSubscribe);
-        console.log(this.latestPostId)
+        // console.log(this.latestPostId)
         if (!this.continueSubscribe || this.latestPostId === null) return;
-        console.log('passed subcribe check');
+        // console.log('passed subcribe check');
         let form = new FormData();
         form.append('latestId', this.latestPostId);
         let response = await this.$http.post(process.env.VUE_APP_SUBSCRIBE, form);
@@ -248,7 +248,7 @@ export default {
     updateLatestPostId() {
       if(this.posts){
         this.latestPostId = this.posts[0].id;
-        console.log(`The latest post id is ${this.latestPostId}`);
+        // console.log(`The latest post id is ${this.latestPostId}`);
       }
     }
   },
